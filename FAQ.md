@@ -37,6 +37,8 @@ Check [stackoverflow][device-unauthorized].
 
 ### Device not detected
 
+>     adb: error: failed to get feature set: no devices/emulators found
+
 If your device is not detected, you may need some [drivers] (on Windows).
 
 [drivers]: https://developer.android.com/studio/run/oem-usb.html
@@ -132,19 +134,29 @@ that's all. See [#37].
 
 ## Client issues
 
-### The quality is low on HiDPI display
+### The quality is low
 
-On Windows, you may need to configure the [scaling behavior].
+If the definition of your client window is smaller than that of your device
+screen, then you might get poor quality, especially visible on text (see [#40]).
+
+[#40]: https://github.com/Genymobile/scrcpy/issues/40
+
+To improve downscaling quality, trilinear filtering is enabled automatically
+if the renderer is OpenGL and if it supports mipmapping.
+
+On Windows, you might want to force OpenGL:
+
+```
+scrcpy --render-driver=opengl
+```
+
+You may also need to configure the [scaling behavior]:
 
 > `scrcpy.exe` > Properties > Compatibility > Change high DPI settings >
 > Override high DPI scaling behavior > Scaling performed by: _Application_.
 
 [scaling behavior]: https://github.com/Genymobile/scrcpy/issues/40#issuecomment-424466723
 
-If your computer definition is far smaller than your screen, then you'll get
-poor quality. See [#40].
-
-[#40]: https://github.com/Genymobile/scrcpy/issues/40
 
 
 ### KWin compositor crashes
